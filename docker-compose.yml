@@ -1,0 +1,68 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: chino
+      POSTGRES_PASSWORD: chino
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+  mysql:
+    image: mysql/mysql-server
+    container_name: mysql
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: "chino"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql           # 挂载数据目录
+      - ./mysql/config:/etc/mysql/conf.d"      # 挂载配置文件目录
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: Pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@chino.com
+      PGADMIN_DEFAULT_PASSWORD: chino
+      PGADMIN_CONFIG_LOGIN_BANNER: "'Welcome to chino testbox'"
+    ports:
+      - 4321:80
+  mongo:
+    image: mongo
+    restart: always
+    ports: 
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: chino
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:chino@172.18.0.1:27017
+  redis:
+    image: redislabs/rejson:latest
+    container_name: Redis
+    restart: always
+    volumes: 
+      - ./redis:/data
+    ports:
+      - 6379:6379
+  web:
+    image: nginx
+    container_name: Nginx
+    restart: always
+    volumes:
+      - ./web:/etc/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    environment:
+      NGINX_PORT: 80
