@@ -1,2 +1,8 @@
 mysql/*
+postgres/data/*
+postgres/init/*
+mongo/data/*
+nginx/vhost/*
 .vscode
+.DS_Store
+.idea
