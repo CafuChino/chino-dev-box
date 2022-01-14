@@ -1,5 +1,17 @@
 version: "3.9"
 services:
+  express1:
+    image: express-static-hello
+    expose:
+      - 3000
+    volumes:
+      - ./expressPublic/public1:/home/node/app/public
+  express2:
+    image: express-static-hello
+    expose:
+      - 3000
+    volumes:
+      - ./expressPublic/public2:/home/node/app/public
   postgres:
     image: postgres
     container_name: postgres
@@ -74,3 +86,14 @@ services:
       - 80:80
     environment:
       NGINX_PORT: 80
+  haproxy:
+      image: haproxy:latest
+      volumes:
+        - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      links:
+        - express1
+        - express2
+      ports:
+        - "3002:3000"
+      expose:
+        - "3000"

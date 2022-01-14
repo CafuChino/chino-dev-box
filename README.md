@@ -2,7 +2,7 @@
 
 前后端开发(部署)环境一键docker
 
-内置了支持json的Rejson版本的Redis
+内置了支持json的Rejson版本的Redis, Haproxy负载均衡
 
 
 
@@ -31,6 +31,8 @@
   - localhost:6379
 - Nginx:
   - localhost:80
+- Haproxy:
+  - localhost:3002
 
 ## 配置
 
@@ -45,6 +47,10 @@ mysql配置文件位置在`./mysql/config`
 静态文件请放置在`./web`
 
 Nginx配置文件请放置在`./nginx`
+
+Haproxy配置文件请放置在`./haproxy`
+
+均衡的express-server的public目录请参考`./expressPublic`
 
 ## 启动
 
