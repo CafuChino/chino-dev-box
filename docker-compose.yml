@@ -1,13 +1,13 @@
 version: "3.9"
 services:
   express1:
-    image: express-static-hello
+    image: cafuchino/express-static-hello:latest
     expose:
       - 3000
     volumes:
       - ./expressPublic/public1:/home/node/app/public
   express2:
-    image: express-static-hello
+    image: cafuchino/express-static-hello:latest
     expose:
       - 3000
     volumes:
